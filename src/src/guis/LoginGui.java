@@ -49,7 +49,7 @@ public class LoginGui extends BaseFrame{
         //register label
         JLabel registerLabel = new JLabel("<html><a href =\"#\">Don't have an account? Regsiter Here</a></html>");
         registerLabel.setBounds(0,510,getWidth() - 10, 30);
-        registerLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        registerLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
         registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(registerLabel);
     }
