@@ -1,11 +1,22 @@
 package guis;
 
 import javax.swing.*;
+import db_objs.User;
 
 public abstract class BaseFrame extends JFrame {
+
+    protected User user;
+
+    public BaseFrame(String title, User user){
+        this.user = user;
+
+        initialize(title);
+    }
+
     public BaseFrame (String title){
         initialize(title);
     }
+
     private void initialize (String title){
         setTitle(title);
         setSize(420, 600);
@@ -15,5 +26,6 @@ public abstract class BaseFrame extends JFrame {
         setLocationRelativeTo(null);
         addGuiComponents();
     }
+
     protected abstract void addGuiComponents();
 }

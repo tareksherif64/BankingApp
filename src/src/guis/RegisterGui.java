@@ -2,6 +2,8 @@ package guis;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RegisterGui extends BaseFrame{
     public RegisterGui(){
@@ -63,8 +65,18 @@ public class RegisterGui extends BaseFrame{
         //Login label
         JLabel loginLabel = new JLabel("<html><a href =\"#\">Already have an account? Login Here</a></html>");
         loginLabel.setBounds(0,510,getWidth() - 10, 30);
-        loginLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+        loginLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        loginLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RegisterGui.this.dispose();
+
+                new LoginGui().setVisible(true);
+            }
+        });
+
         add(loginLabel);
     }
 }
