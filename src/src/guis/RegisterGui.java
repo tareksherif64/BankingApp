@@ -1,7 +1,11 @@
 package guis;
 
+import db_objs.MyJDBC;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -60,12 +64,36 @@ public class RegisterGui extends BaseFrame{
         JButton registerButton = new JButton("Register");
         registerButton.setBounds(20,460,getWidth() - 50, 40);
         registerButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String username = usernameField.getText();
+                String password = String.valueOf(passwordField.getPassword());
+                String rePassword = String.valueOf(rePasswordField.getPassword());
+
+                if(validateUserInput(username, password, rePassword)){
+
+                    if(MyJDBC.register(username, password)){
+                        RegisterGui.this.dispose();
+                        LoginGui loginGui = new LoginGui();
+                        loginGui.setVisible(true);
+                        JOptionPane.showMessageDialog(loginGui, "Account Registered Successfully!");
+                    }else{
+                        JOptionPane.showMessageDialog(RegisterGui.this, "Error: Username already taken.");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(RegisterGui.this, "Error: Username must be at least 6 characters long\n" +
+                            "and/or Password must match");
+                }
+            }
+        });
         add(registerButton);
 
         //Login label
         JLabel loginLabel = new JLabel("<html><a href =\"#\">Already have an account? Login Here</a></html>");
         loginLabel.setBounds(0,510,getWidth() - 10, 30);
-        loginLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        loginLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
         loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         loginLabel.addMouseListener(new MouseAdapter() {
@@ -78,5 +106,22 @@ public class RegisterGui extends BaseFrame{
         });
 
         add(loginLabel);
+    }
+
+    private boolean validateUserInput(String username, String password, String rePassword){
+
+        if(username.isEmpty() || password.isEmpty() || rePassword.isEmpty()){
+            return false;
+        }
+
+        if(username.length() < 6){
+            return false;
+        }
+
+        if(!password.equals(rePassword)){
+            return false;
+        }
+
+        return true;
     }
 }
